@@ -14,13 +14,15 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities
         public CatalogType CatalogType { get; private set; }
         public int CatalogBrandId { get; private set; }
         public CatalogBrand CatalogBrand { get; private set; }
+        public int SugarContent { get; private set; }
+
 
         public CatalogItem(int catalogTypeId,
             int catalogBrandId,
             string description,
             string name,
             decimal price,
-            string pictureUri)
+            string pictureUri, int sugarContent)
         {
             CatalogTypeId = catalogTypeId;
             CatalogBrandId = catalogBrandId;
@@ -28,7 +30,9 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities
             Name = name;
             Price = price;
             PictureUri = pictureUri;
+            SugarContent = sugarContent;
         }
+
 
         public void UpdateDetails(string name, string description, decimal price)
         {
