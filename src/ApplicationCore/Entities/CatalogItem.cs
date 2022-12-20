@@ -16,21 +16,27 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities
         public CatalogBrand CatalogBrand { get; private set; }
         public int SugarContent { get; private set; }
 
+        public int CatalogSugarId { get; private set; }
+        public CatalogSugar CatalogSugar { get; private set; }
+
+
 
         public CatalogItem(int catalogTypeId,
             int catalogBrandId,
             string description,
             string name,
             decimal price,
-            string pictureUri, int sugarContent)
+            string pictureUri, int sugarContent, int catalogSugarId)
         {
             CatalogTypeId = catalogTypeId;
             CatalogBrandId = catalogBrandId;
+            CatalogSugarId = catalogSugarId;
             Description = description;
             Name = name;
             Price = price;
             PictureUri = pictureUri;
             SugarContent = sugarContent;
+            
         }
 
 

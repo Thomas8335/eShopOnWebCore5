@@ -20,6 +20,7 @@ namespace Microsoft.eShopWeb.Web.Services
         private readonly ILogger<CatalogViewModelService> _logger;
         private readonly IRepository<CatalogItem> _itemRepository;
         private readonly IRepository<CatalogBrand> _brandRepository;
+        private readonly IRepository<CatalogSugar> _sugarRepository;
         private readonly IRepository<CatalogType> _typeRepository;
         private readonly IUriComposer _uriComposer;
 
@@ -28,22 +29,25 @@ namespace Microsoft.eShopWeb.Web.Services
             IRepository<CatalogItem> itemRepository,
             IRepository<CatalogBrand> brandRepository,
             IRepository<CatalogType> typeRepository,
+            IRepository<CatalogSugar> sugarRepository,
             IUriComposer uriComposer)
         {
             _logger = loggerFactory.CreateLogger<CatalogViewModelService>();
             _itemRepository = itemRepository;
             _brandRepository = brandRepository;
             _typeRepository = typeRepository;
+            _sugarRepository = sugarRepository;
             _uriComposer = uriComposer;
+            
         }
 
-        public async Task<CatalogIndexViewModel> GetCatalogItems(int pageIndex, int itemsPage, int? brandId, int? typeId)
+        public async Task<CatalogIndexViewModel> GetCatalogItems(int pageIndex, int itemsPage, int? brandId, int? typeId, int? sugarId)
         {
             _logger.LogInformation("GetCatalogItems called.");
 
-            var filterSpecification = new CatalogFilterSpecification(brandId, typeId);
+            var filterSpecification = new CatalogFilterSpecification(brandId, typeId, sugarId);
             var filterPaginatedSpecification =
-                new CatalogFilterPaginatedSpecification(itemsPage * pageIndex, itemsPage, brandId, typeId);
+                new CatalogFilterPaginatedSpecification(itemsPage * pageIndex, itemsPage, brandId, typeId, sugarId);
 
             // the implementation below using ForEach and Count. We need a List.
             var itemsOnPage = await _itemRepository.ListAsync(filterPaginatedSpecification);
@@ -57,12 +61,14 @@ namespace Microsoft.eShopWeb.Web.Services
                     Name = i.Name,
                     PictureUri = _uriComposer.ComposePicUri(i.PictureUri),
                     Price = i.Price,
-                    SugarContent = i.SugarContent
+                    SugarContent = i.CatalogSugarId
                 }).ToList(),
                 Brands = (await GetBrands()).ToList(),
                 Types = (await GetTypes()).ToList(),
+                Sugar = (await GetSugar()).ToList(),
                 BrandFilterApplied = brandId ?? 0,
                 TypesFilterApplied = typeId ?? 0,
+                SugarFilterApplied = sugarId ?? 0,
                 PaginationInfo = new PaginationInfoViewModel()
                 {
                     ActualPage = pageIndex,
@@ -101,6 +107,22 @@ namespace Microsoft.eShopWeb.Web.Services
 
             var items = types
                 .Select(type => new SelectListItem() { Value = type.Id.ToString(), Text = type.Type })
+                .OrderBy(t => t.Text)
+                .ToList();
+
+            var allItem = new SelectListItem() { Value = null, Text = "All", Selected = true };
+            items.Insert(0, allItem);
+
+            return items;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetSugar()
+        {
+            _logger.LogInformation("GetTypes called.");
+            var types = await _sugarRepository.ListAsync();
+
+            var items = types
+                .Select(sugar => new SelectListItem() { Value = sugar.Id.ToString(), Text = sugar.Sugar })
                 .OrderBy(t => t.Text)
                 .ToList();
 

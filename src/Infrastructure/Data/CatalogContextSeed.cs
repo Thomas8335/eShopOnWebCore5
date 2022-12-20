@@ -36,6 +36,14 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
                     await catalogContext.SaveChangesAsync();
                 }
 
+                if (!await catalogContext.CatalogSugars.AnyAsync())
+                {
+                    await catalogContext.CatalogSugars.AddRangeAsync(
+                        GetPreconfiguredCatalogSugar());
+
+                    await catalogContext.SaveChangesAsync();
+                }
+
                 if (!await catalogContext.CatalogItems.AnyAsync())
                 {
                     await catalogContext.CatalogItems.AddRangeAsync(
@@ -43,6 +51,8 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
 
                     await catalogContext.SaveChangesAsync();
                 }
+
+                
             }
             catch (Exception ex)
             {
@@ -79,6 +89,15 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
             };
         }
 
+        static IEnumerable<CatalogSugar> GetPreconfiguredCatalogSugar()
+        {
+            return new List<CatalogSugar>
+            {
+                new("Contains Sugar"),
+                new("No Sugar")
+            };
+        }
+
         static IEnumerable<CatalogItem> GetPreconfiguredItems()
         {
 
@@ -86,19 +105,20 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
 
             return new List<CatalogItem>
             {
-                new(1,1, "Snickers", "Snickers", 2.0M,  "http://catalogbaseurltobereplaced/images/products/1.png", 29),
-                new(3,1, "Skittles", "Skittles", 2.50M, "http://catalogbaseurltobereplaced/images/products/2.png", 29),
-                new(1,1, "Twix", "Twix", 2.0M,  "http://catalogbaseurltobereplaced/images/products/3.png", 25),
-                new(3,2, "Jolly Ranchers", "Jolly Ranchers", 4.0M, "http://catalogbaseurltobereplaced/images/products/4.png", 11),
-                new(1,2, "Milk Chocolate", "Milk Chocolate", 1.5M, "http://catalogbaseurltobereplaced/images/products/5.png", 24),
-                new(1,2, "Reese's", "Reese's", 2.0M, "http://catalogbaseurltobereplaced/images/products/6.png", 22),
-                new(1,3, "Crunch", "Crunch",  1.8M, "http://catalogbaseurltobereplaced/images/products/7.png", 24),
-                new(1,3, "Butterfinger", "Butterfinger", 2.0M, "http://catalogbaseurltobereplaced/images/products/8.png", 28),
-                new(3,3, "Smarties", "Smarties", 3.0M, "http://catalogbaseurltobereplaced/images/products/9.png", 6),
-                new(2,4, "Extra Gum", "Extra Gum", 12, "http://catalogbaseurltobereplaced/images/products/10.png", 0),
-                new(4,5, "Candy Canes", "Candy Canes", 5.0M, "http://catalogbaseurltobereplaced/images/products/11.png", 14),
-                new(3,5, "Dum-Dums", "Dum-Dums", 4.5M, "http://catalogbaseurltobereplaced/images/products/12.png", 9)
+                new(1,1, "Snickers", "Snickers", 2.0M,  "http://catalogbaseurltobereplaced/images/products/1.png", 29, 1),
+                new(3,1, "Skittles", "Skittles", 2.50M, "http://catalogbaseurltobereplaced/images/products/2.png", 29, 1),
+                new(1,1, "Twix", "Twix", 2.0M,  "http://catalogbaseurltobereplaced/images/products/3.png", 25, 1),
+                new(3,2, "Jolly Ranchers", "Jolly Ranchers", 4.0M, "http://catalogbaseurltobereplaced/images/products/4.png", 11, 1),
+                new(1,2, "Milk Chocolate", "Milk Chocolate", 1.5M, "http://catalogbaseurltobereplaced/images/products/5.png", 24, 1),
+                new(1,2, "Reese's", "Reese's", 2.0M, "http://catalogbaseurltobereplaced/images/products/6.png", 22, 1),
+                new(1,3, "Crunch", "Crunch",  1.8M, "http://catalogbaseurltobereplaced/images/products/7.png", 24, 1),
+                new(1,3, "Butterfinger", "Butterfinger", 2.0M, "http://catalogbaseurltobereplaced/images/products/8.png", 28, 1),
+                new(3,3, "Smarties", "Smarties", 3.0M, "http://catalogbaseurltobereplaced/images/products/9.png", 6, 1),
+                new(2,4, "Extra Gum", "Extra Gum", 12, "http://catalogbaseurltobereplaced/images/products/10.png", 0, 2),
+                new(4,5, "Candy Canes", "Candy Canes", 5.0M, "http://catalogbaseurltobereplaced/images/products/11.png", 14, 1),
+                new(3,5, "Dum-Dums", "Dum-Dums", 4.5M, "http://catalogbaseurltobereplaced/images/products/12.png", 9, 1)
             };
+            
         }
     }
 }

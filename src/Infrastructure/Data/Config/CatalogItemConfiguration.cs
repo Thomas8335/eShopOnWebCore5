@@ -32,6 +32,10 @@ namespace Microsoft.eShopWeb.Infrastructure.Data.Config
             builder.HasOne(ci => ci.CatalogType)
                 .WithMany()
                 .HasForeignKey(ci => ci.CatalogTypeId);
+
+            builder.HasOne(ci => ci.CatalogSugar)
+                .WithMany()
+                .HasForeignKey(ci => ci.CatalogSugarId);
         }
     }
 }
