@@ -43,8 +43,8 @@ namespace Microsoft.eShopWeb.Web.Features.OrderDetails
                 OrderNumber = order.Id,
                 ShippingAddress = order.ShipToAddress,
                 Total = order.Total(),
-                //Tax = order.Tax(),
-                //GrandTotal = order.GrandTotal()
+                Tax = order.Tax(),
+                GrandTotal = order.GrandTotal()
             };
         }
     }

@@ -52,7 +52,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
 
         public decimal Tax()
         {
-            var taxRate = 0.6M;
+            var taxRate = 0.06M;
             var beforeTax = Total();
             var taxAmount = beforeTax * taxRate;
             return taxAmount;
