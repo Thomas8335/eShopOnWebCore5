@@ -13,10 +13,13 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Entities.CatalogItemTests
         private string _validName = "test name";
         private decimal _validPrice = 1.23m;
         private string _validUri = "/123";
+        private int _validSugarContent = 1;
+        private int _validSugarId = 1;
+
 
         public UpdateDetails()
         {
-            _testItem = new CatalogItem(_validTypeId, _validBrandId, _validDescription, _validName, _validPrice, _validUri);
+            _testItem = new CatalogItem(_validTypeId, _validBrandId, _validDescription, _validName, _validPrice, _validUri, _validSugarContent, _validSugarId);
         }
 
         [Fact]

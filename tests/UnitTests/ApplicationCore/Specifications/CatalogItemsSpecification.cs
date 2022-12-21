@@ -25,7 +25,7 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Specifications
         [Fact]
         public void MatchesAllCatalogItems()
         {
-            var catalogItemIds = new int[] { 1, 3 };
+            var catalogItemIds = new int[] { 1, 3};
             var spec = new eShopWeb.ApplicationCore.Specifications.CatalogItemsSpecification(catalogItemIds);
 
             var result = GetTestCollection()
@@ -40,10 +40,10 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Specifications
         {
             var catalogItems = new List<CatalogItem>();
 
-            var mockCatalogItem1 = new Mock<CatalogItem>(1, 1, "Item 1 description", "Item 1", 1.5m, "Item1Uri");
+            var mockCatalogItem1 = new Mock<CatalogItem>(1, 1, "Item 1 description", "Item 1", 1.5m, "Item1Uri", 0, 0);
             mockCatalogItem1.SetupGet(x => x.Id).Returns(1);
 
-            var mockCatalogItem3 = new Mock<CatalogItem>(3, 3, "Item 3 description", "Item 3", 3.5m, "Item3Uri");
+            var mockCatalogItem3 = new Mock<CatalogItem>(3, 3, "Item 3 description", "Item 3", 3.5m, "Item3Uri", 0, 0);
             mockCatalogItem3.SetupGet(x => x.Id).Returns(3);
 
             catalogItems.Add(mockCatalogItem1.Object);
