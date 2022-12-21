@@ -61,7 +61,7 @@ namespace Microsoft.eShopWeb.Web.Services
                     Name = i.Name,
                     PictureUri = _uriComposer.ComposePicUri(i.PictureUri),
                     Price = i.Price,
-                    SugarContent = i.CatalogSugarId
+                    SugarContent = i.SugarContent
                 }).ToList(),
                 Brands = (await GetBrands()).ToList(),
                 Types = (await GetTypes()).ToList(),
